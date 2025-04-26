@@ -109,7 +109,10 @@ export default function Login() {
               >
                 Log In
               </button> */}
-              <button className="bg-green-400 text-black py-2 text-xl font-bold hover:scale-105 hover:shadow-[0_0_10px_#00FF00] transition-all duration-300">
+              <button
+                type="submit"
+                className="bg-green-400 text-black py-2 text-xl font-bold hover:scale-105 hover:shadow-[0_0_10px_#00FF00] transition-all duration-300"
+              >
                 Enter Arena
               </button>
             </form>
