@@ -39,8 +39,8 @@ export default function Login() {
 
         navigate("/rules");
       } catch (err) {
-        console.error(err);
-        alert("Server Error. Try again later.");
+        console.error("Error:", err);
+        alert(`Server Error: ${err.message}. Please try again later.`);
       }
     }
   };
