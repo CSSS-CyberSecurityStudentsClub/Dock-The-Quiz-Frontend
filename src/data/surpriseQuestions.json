@@ -1,0 +1,53 @@
+[
+    {
+      "question": "Which command shows all open network connections?",
+      "options": ["netstat", "ping", "traceroute", "dig"],
+      "answer": "netstat"
+    },
+    {
+      "question": "In CTFs, what does 'flag' usually mean?",
+      "options": ["A virus", "A secret string", "An attack", "A defense"],
+      "answer": "A secret string"
+    },
+    {
+      "question": "Port number for SSH service?",
+      "options": ["21", "22", "23", "25"],
+      "answer": "22"
+    },
+    {
+      "question": "Which tool is commonly used for web directory brute-forcing?",
+      "options": ["nmap", "dirb", "john", "wireshark"],
+      "answer": "dirb"
+    },
+    {
+      "question": "Command to change file permissions in Linux?",
+      "options": ["chmod", "chperm", "chfile", "chown"],
+      "answer": "chmod"
+    },
+    {
+      "question": "Which encryption standard is stronger?",
+      "options": ["MD5", "SHA-1", "SHA-256", "Base64"],
+      "answer": "SHA-256"
+    },
+    {
+      "question": "Capture the Flag (CTF) usually tests?",
+      "options": ["Gaming skills", "Cybersecurity skills", "Marketing skills", "Drawing skills"],
+      "answer": "Cybersecurity skills"
+    },
+    {
+      "question": "Find hidden data in image files is called?",
+      "options": ["Cryptography", "Steganography", "Phishing", "Ransomware"],
+      "answer": "Steganography"
+    },
+    {
+      "question": "Common Linux tool for network scanning?",
+      "options": ["Nmap", "Gimp", "Git", "Mysql"],
+      "answer": "Nmap"
+    },
+    {
+      "question": "What does the Linux 'root' user have?",
+      "options": ["Limited access", "No access", "Full control", "Read-only access"],
+      "answer": "Full control"
+    }
+  ]
+  

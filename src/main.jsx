@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
-import App from "./App.jsx";
 import Intro from "./pages/Intro.jsx";
 import Login from "./pages/Login.jsx"; // import login page
 import Rules from "./pages/Rules.jsx";

@@ -1,140 +1,53 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import questions from "../data/questions.json";
 import LiveBackground from "../components/LiveBackground";
 import GlassCard from "../components/GlassCard";
 import { motion } from "framer-motion";
-// Dummy MCQs (add more later)
-const sampleQuestions = [
-  {
-    question: "What does SSH stand for?",
-    options: ["Secure Shell", "Super Socket", "Socket Secure", "Shell Secure"],
-    answer: "Secure Shell",
-  },
-  {
-    question: "Which command lists running processes?",
-    options: ["ls", "ps", "grep", "pwd"],
-    answer: "ps",
-  },
-  {
-    question: "Linux command to display current path?",
-    options: ["cd", "whereami", "path", "pwd"],
-    answer: "pwd",
-  },
-  {
-    question: "Which port does HTTP use?",
-    options: ["21", "80", "22", "443"],
-    answer: "80",
-  },
-  {
-    question: "What is the root user ID?",
-    options: ["1000", "0", "1", "500"],
-    answer: "0",
-  },
-];
 
 export default function Quiz() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const totalQuestions = 5;
-  const questionsPerRound = 5;
-
-  const resumeFrom = location?.state?.resumeFrom || 0;
-  const [currentQuestion, setCurrentQuestion] = useState(resumeFrom);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(25);
   const [hasSurpriseHappened, setHasSurpriseHappened] = useState(false);
+  const [shake, setShake] = useState(false);
 
-  // Random surprise round (fixed once)
-  const [surpriseRoundIndex] = useState(Math.floor(Math.random() * 8)); // 0 to 7
+  const totalQuestions = questions.length;
+  const questionsPerRound = 5;
+  const [surpriseRoundIndex] = useState(Math.floor(Math.random() * 8)); // random stage surprise
 
   useEffect(() => {
     if (timeLeft === 0) handleNext();
 
-    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 6) setShake(true); // start screen shake at last 5s
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => clearInterval(timer);
   }, [timeLeft]);
-
+  // Handle move to next question if no answer
+  const handleNext = async () => {
+    await nextStep();
+  };
   const handleAnswer = async (opt) => {
-    const correct = sampleQuestions[currentQuestion]?.answer;
+    const correct = questions[currentQuestion]?.answer;
 
     if (opt === correct) {
-      setScore((prev) => prev + 1); // Update score here
-      await nextStep(true);
-    } else {
-      await nextStep(false);
+      setScore((prev) => prev + 1);
     }
+    await nextStep();
   };
 
-  // anti cheat
-
-  const [cheatCount, setCheatCount] = useState(0);
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setCheatCount((prev) => prev + 1);
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (cheatCount >= 2) {
-      alert("Cheating detected! You have been disqualified!");
-      localStorage.clear();
-      window.location.href = "/login"; // force logout
-    }
-  }, [cheatCount]);
-  useEffect(() => {
-    const handleCopy = (e) => {
-      e.preventDefault();
-      setCheatCount((prev) => prev + 1);
-      alert("Copying not allowed!");
-    };
-
-    document.addEventListener("copy", handleCopy);
-
-    return () => {
-      document.removeEventListener("copy", handleCopy);
-    };
-  }, []);
-  useEffect(() => {
-    const handleRightClick = (e) => {
-      e.preventDefault();
-      alert("Right-click disabled!");
-    };
-
-    const handleKeydown = (e) => {
-      if (
-        e.ctrlKey &&
-        (e.key === "u" || e.key === "s" || e.key === "i" || e.key === "j")
-      ) {
-        e.preventDefault();
-        alert("Inspecting blocked!");
-        setCheatCount((prev) => prev + 1);
-      }
-    };
-
-    document.addEventListener("contextmenu", handleRightClick);
-    document.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      document.removeEventListener("contextmenu", handleRightClick);
-      document.removeEventListener("keydown", handleKeydown);
-    };
-  }, []);
-
-  const nextStep = async (wasCorrect) => {
-    const id = localStorage.getItem("dock-id");
+  const nextStep = async () => {
     const nextIndex = currentQuestion + 1;
+    const id = localStorage.getItem("dock-id");
 
-    // Surprise logic
     const surpriseTriggerIndex = (surpriseRoundIndex + 1) * questionsPerRound;
 
     if (
@@ -150,48 +63,75 @@ export default function Quiz() {
     if (nextIndex < totalQuestions) {
       setCurrentQuestion(nextIndex);
       setTimeLeft(25);
+      setShake(false);
     } else {
-      // Final score is already updated in handleAnswer
       await fetch(
-        "https://dock-the-quiz-backend-production.up.railway.app/api/submit-score",
+        "https://dock-the-flag-backend.onrender.com/api/submit-score",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id, score }), // Use the updated score
+          body: JSON.stringify({ id, score }),
         }
       );
-
       navigate("/leaderboard", { state: { score } });
     }
   };
 
-  const question = sampleQuestions[currentQuestion];
+  const current = questions[currentQuestion];
 
-  if (!question) return <div className="text-green-400">Loading...</div>;
+  if (!current) return <div className="text-green-400">Loading...</div>;
 
   return (
     <>
       <LiveBackground mode="matrix" />
-      <div className="flex flex-col items-center justify-center min-h-screen text-green-400 p-4 relative">
-        <div className="text-xl mb-2">Time Left: {timeLeft}s</div>
+
+      <div
+        className={`flex flex-col items-center justify-center min-h-screen text-green-400 p-4 relative transition-all ${
+          shake ? "animate-shake" : ""
+        }`}
+      >
+        {/* Timer */}
+        <div
+          className={`text-2xl font-bold mb-4 ${
+            timeLeft <= 5
+              ? "text-red-500 animate-pulse"
+              : timeLeft <= 10
+              ? "text-yellow-400"
+              : "text-green-400"
+          }`}
+        >
+          Time Left: {timeLeft}s
+        </div>
+
+        {/* Question Type Badge */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="bg-green-900/30 border border-green-400 text-green-300 rounded-lg px-4 py-2 mb-4 text-center uppercase tracking-wider text-sm"
+        >
+          {current.type}
+        </motion.div>
+
+        {/* Question Card */}
         <GlassCard className="max-w-md w-full">
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="text-2xl font-bold mb-4 text-center"
+            className="text-2xl font-bold mb-6 text-center"
           >
-            {question.question}
+            {current.question}
           </motion.h1>
 
           <div className="flex flex-col gap-4">
-            {question.options.map((opt, idx) => (
+            {current.options.map((opt, idx) => (
               <button
                 key={idx}
                 onClick={() => handleAnswer(opt)}
-                className="bg-transparent border border-green-400 hover:bg-green-400 hover:text-black py-2 transition-all duration-300"
+                className="bg-transparent border border-green-400 hover:bg-green-400 hover:text-black py-2 transition-all duration-300 font-bold"
               >
                 {opt}
               </button>

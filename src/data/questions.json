@@ -1,0 +1,33 @@
+[
+    {
+      "type": "Scenario-Based Question",
+      "question": "You detect unusual SSH login attempts from multiple IPs. What's your first action?",
+      "options": ["Restart SSH service", "Check auth logs and firewall", "Ignore it", "Block all traffic"],
+      "answer": "Check auth logs and firewall"
+    },
+    {
+      "type": "Puzzle-Based Question",
+      "question": "Decode: What is 'ifconfig' used for?",
+      "options": ["Manage firewall", "Configure network interfaces", "List users", "Monitor CPU"],
+      "answer": "Configure network interfaces"
+    },
+    {
+      "type": "Rapid-Fire Knowledge",
+      "question": "Default port for HTTPS?",
+      "options": ["22", "443", "80", "53"],
+      "answer": "443"
+    },
+    {
+      "type": "Spot the Mistake",
+      "question": "Identify the wrong command to list files.",
+      "options": ["ls", "dir", "show", "ls -a"],
+      "answer": "show"
+    },
+    {
+      "type": "Mystery Flags",
+      "question": "Which Linux directory typically contains user data?",
+      "options": ["/etc", "/home", "/var", "/root"],
+      "answer": "/home"
+    }
+  ]
+  
