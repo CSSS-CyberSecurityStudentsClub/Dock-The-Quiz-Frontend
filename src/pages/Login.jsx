@@ -27,7 +27,7 @@ export default function Login() {
       setError(""); // Clear any previous errors
       try {
         const res = await fetch(
-          "https://dock-the-flag-backend.onrender.com/api/login",
+          "https://dock-the-quiz-backend-production.up.railway.app/api/login",
           {
             method: "POST",
             headers: {
