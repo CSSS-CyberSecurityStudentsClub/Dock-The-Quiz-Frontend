@@ -12,8 +12,6 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     if (username.trim() && name.trim() && phone.trim() && college.trim()) {
       try {
         const res = await fetch(
@@ -27,20 +25,19 @@ export default function Login() {
           }
         );
 
+        if (!res.ok) {
+          throw new Error("Login API failed");
+        }
+
         const data = await res.json();
 
-        if (res.ok) {
-          // Save player details locally if needed
-          localStorage.setItem("dock-username", username);
-          localStorage.setItem("dock-name", name);
-          localStorage.setItem("dock-phone", phone);
-          localStorage.setItem("dock-college", college);
-          localStorage.setItem("dock-id", data.player.id); // Store id from database if needed
+        localStorage.setItem("dock-username", username);
+        localStorage.setItem("dock-name", name);
+        localStorage.setItem("dock-phone", phone);
+        localStorage.setItem("dock-college", college);
+        localStorage.setItem("dock-id", data.player.id);
 
-          navigate("/rules");
-        } else {
-          alert(data.error || "Login Failed");
-        }
+        navigate("/rules");
       } catch (err) {
         console.error(err);
         alert("Server Error. Try again later.");
@@ -68,7 +65,10 @@ export default function Login() {
             </motion.h1>
 
             <form
-              onSubmit={handleSubmit}
+              onSubmit={(e) => {
+                e.preventDefault(); // Very first thing
+                handleSubmit();
+              }}
               className="flex flex-col gap-4 w-full"
             >
               <input
