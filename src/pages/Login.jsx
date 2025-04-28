@@ -69,7 +69,7 @@ export default function Login() {
 
   return (
     <>
-      <LiveBackground mode="matrix" />
+      <LiveBackground mode="scanline" />
 
       <div className="flex flex-col items-center justify-center min-h-screen text-green-400 relative p-4">
         {/* Animated Glass Card */}

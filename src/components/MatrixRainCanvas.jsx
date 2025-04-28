@@ -1,12 +1,7 @@
 import { useEffect, useRef } from "react";
 
-export default function LiveBackground({ mode = "matrix", timeLeft }) {
+function MatrixRainCanvas({ timeLeft }) {
   const canvasRef = useRef(null);
-  const timeLeftRef = useRef(timeLeft); // Ref to store the latest timeLeft value
-
-  useEffect(() => {
-    timeLeftRef.current = timeLeft; // Update the ref whenever timeLeft changes
-  }, [timeLeft]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,26 +13,15 @@ export default function LiveBackground({ mode = "matrix", timeLeft }) {
     const columns = Math.floor(width / fontSize);
     const drops = Array(columns).fill(1);
 
-    let characters = "01".split("");
-    if (mode === "scanline") characters = "████░░▒▒▓▓".split("");
-    if (mode === "grid") characters = "+-*|\\/".split("");
-    if (mode === "chiness")
-      characters =
-        "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲン".split(
-          ""
-        );
+    const characters = "01".split("");
 
     const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Slightly darker fade effect
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, width, height);
 
-      // Use the latest value of timeLeft from the ref
-      const currentTimeLeft = timeLeftRef.current;
-
-      // Dynamic color based on timeLeft
-      let color = "#00FF00"; // Default Green
-      if (currentTimeLeft <= 10 && currentTimeLeft > 5) color = "#FFFF00"; // Yellow
-      if (currentTimeLeft <= 5) color = "#FF0000"; // Red
+      let color = "#00FF00"; // Green
+      if (timeLeft <= 10 && timeLeft > 5) color = "#FFFF00"; // Yellow
+      if (timeLeft <= 5) color = "#FF0000"; // Red
 
       ctx.fillStyle = color;
       ctx.font = fontSize + "px monospace";
@@ -59,13 +43,14 @@ export default function LiveBackground({ mode = "matrix", timeLeft }) {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
+
     window.addEventListener("resize", handleResize);
 
     return () => {
       clearInterval(interval);
       window.removeEventListener("resize", handleResize);
     };
-  }, [mode]); // Only depend on mode, not timeLeft
+  }, [timeLeft]);
 
   return (
     <canvas
@@ -74,3 +59,5 @@ export default function LiveBackground({ mode = "matrix", timeLeft }) {
     />
   );
 }
+
+export default MatrixRainCanvas; // ✅ ADD THIS BROOOO

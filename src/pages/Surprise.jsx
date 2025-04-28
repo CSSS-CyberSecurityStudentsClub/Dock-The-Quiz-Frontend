@@ -85,7 +85,7 @@ export default function Surprise() {
 
   return (
     <>
-      <LiveBackground mode="glitch" /> {/* More danger visual */}
+      <LiveBackground mode="chiness" timeLeft={timeLeft} />
       <div
         className={`flex flex-col items-center justify-center min-h-screen text-red-400 p-4 relative transition-all ${
           shake ? "animate-shake" : ""
