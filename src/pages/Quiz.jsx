@@ -45,14 +45,27 @@ export default function Quiz() {
 
   const handleAnswer = async (opt) => {
     const correct = questions[currentQuestion]?.answer;
+    const id = localStorage.getItem("dock-id");
 
-    let updatedScore = score; // Use a local variable to track the updated score
     if (opt === correct) {
-      updatedScore = score + 1; // Increment the score if the answer is correct
-      setScore(updatedScore); // Update the state asynchronously
+      setScore((prev) => prev + 1);
+
+      // ✨ IMMEDIATELY UPDATE DB
+      try {
+        await fetch(
+          "https://dock-the-quiz-backend-production.up.railway.app/api/submit-score",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, score: score + 1 }),
+          }
+        );
+      } catch (error) {
+        console.error("Failed to update score:", error);
+      }
     }
 
-    await nextStep(updatedScore); // Pass the updated score to the next step
+    await nextStep(); // move to next question
   };
 
   const nextStep = async (updatedScore) => {
@@ -129,52 +142,6 @@ export default function Quiz() {
       document.removeEventListener("copy", handleCopy);
     };
   }, []);
-
-  // 3. Detect right-click
-  useEffect(() => {
-    const handleRightClick = (e) => {
-      e.preventDefault();
-      alert("Right-click disabled!");
-    };
-    document.addEventListener("contextmenu", handleRightClick);
-
-    return () => {
-      document.removeEventListener("contextmenu", handleRightClick);
-    };
-  }, []);
-
-  // 4. Detect keyboard shortcuts for inspect
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (
-        e.ctrlKey &&
-        (e.key === "u" || e.key === "s" || e.key === "i" || e.key === "j")
-      ) {
-        e.preventDefault();
-        alert("Inspecting blocked!");
-        setCheatCount((prev) => prev + 1);
-      }
-      if (e.key === "F12") {
-        e.preventDefault();
-        alert("Inspecting blocked!");
-        setCheatCount((prev) => prev + 1);
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  // 5. Disqualify if cheated
-  useEffect(() => {
-    if (cheatCount >= 2) {
-      alert("Cheating detected! You have been disqualified!");
-      // localStorage.clear();
-      // window.location.href = "/login"; // force logout
-    }
-  }, [cheatCount]);
   // 6. Detect Long Press on Mobile
   useEffect(() => {
     const handleTouchStart = (e) => {
@@ -203,33 +170,6 @@ export default function Quiz() {
     };
   }, []);
 
-  // 8. Disable Zooming (Pinch/DoubleTap Zoom)
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (e.ctrlKey) {
-        e.preventDefault();
-      }
-    };
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
-    const handleGestureStart = (e) => {
-      e.preventDefault();
-    };
-    document.addEventListener("gesturestart", handleGestureStart);
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      document.removeEventListener("gesturestart", handleGestureStart);
-    };
-  }, []);
-
-  // 9. (Optional) Lock Screen Orientation
-  // Only works on supported mobile browsers
-  useEffect(() => {
-    if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock("portrait").catch(() => {});
-    }
-  }, []);
   useEffect(() => {
     if (cheatCount >= 2) {
       // Display cheating alert
