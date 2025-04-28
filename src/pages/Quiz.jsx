@@ -48,7 +48,8 @@ export default function Quiz() {
     const id = localStorage.getItem("dock-id");
 
     if (opt === correct) {
-      setScore((prev) => prev + 1);
+      const updatedScore = score + 1; // Calculate the updated score
+      setScore(updatedScore); // Update the score state
 
       // ✨ IMMEDIATELY UPDATE DB
       try {
@@ -57,7 +58,7 @@ export default function Quiz() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id, score: score + 1 }),
+            body: JSON.stringify({ id, score: updatedScore }), // Use the updated score
           }
         );
       } catch (error) {
@@ -65,7 +66,7 @@ export default function Quiz() {
       }
     }
 
-    await nextStep(); // move to next question
+    await nextStep(score + (opt === correct ? 1 : 0)); // Pass the correct updated score
   };
 
   const nextStep = async (updatedScore) => {

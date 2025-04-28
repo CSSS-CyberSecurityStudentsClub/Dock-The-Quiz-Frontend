@@ -7,17 +7,31 @@ export default function Leaderboard() {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
+    const fetchWithRetry = async (url, retries = 3, delay = 1000) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return await res.json();
+        } catch (err) {
+          console.error(`Attempt ${i + 1} failed:`, err);
+          if (i < retries - 1)
+            await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+      }
+      throw new Error("All fetch attempts failed");
+    };
+
     const fetchLeaderboard = async () => {
       try {
-        const res = await fetch(
+        const data = await fetchWithRetry(
           "https://dock-the-quiz-backend-production.up.railway.app/api/leaderboard"
         );
-        const data = await res.json();
         if (data && data.leaderboard) {
           setPlayers(data.leaderboard.sort((a, b) => b.score - a.score));
         }
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch leaderboard:", err);
       }
     };
 
@@ -49,20 +63,20 @@ export default function Leaderboard() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10 w-full max-w-5xl">
           {players.slice(0, 3).map((player, index) => (
             <motion.div
-              key={player.id}
+              key={player.id || index} // Ensure unique key prop
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               layout
               whileHover={{ scale: 1.05, rotate: 1 }}
               className={`relative rounded-2xl p-6 text-center shadow-2xl backdrop-blur-md bg-black/70 transition-all duration-300
-        ${
-          index === 0
-            ? "border-4 border-yellow-400 shadow-yellow-500/50"
-            : index === 1
-            ? "border-4 border-gray-400 shadow-gray-400/50"
-            : "border-4 border-orange-400 shadow-orange-400/50"
-        }`}
+      ${
+        index === 0
+          ? "border-4 border-yellow-400 shadow-yellow-500/50"
+          : index === 1
+          ? "border-4 border-gray-400 shadow-gray-400/50"
+          : "border-4 border-orange-400 shadow-orange-400/50"
+      }`}
             >
               {/* Floating Crown */}
               <div className="absolute -top-14 left-1/2 transform -translate-x-1/2">
@@ -125,7 +139,7 @@ export default function Leaderboard() {
               <AnimatePresence>
                 {players.slice(3).map((player, index) => (
                   <motion.tr
-                    key={player.id}
+                    key={player.id || `${player.username}-${index}`} // Ensure unique key prop
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
