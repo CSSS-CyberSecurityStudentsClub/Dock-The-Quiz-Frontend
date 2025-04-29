@@ -12,7 +12,7 @@ export default function Surprise() {
   const resumeFrom = location?.state?.resumeFrom || 0;
   const existingScore = location?.state?.score || 0;
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(resumeFrom);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
   const [shake, setShake] = useState(false);
@@ -46,7 +46,8 @@ export default function Surprise() {
     handleNext();
   };
 
-  const handleNext = () => {
+  // Save the current question and score to localStorage when navigating back to the quiz
+  const handleNext = async () => {
     const nextIndex = currentQuestion + 1;
 
     if (nextIndex < totalQuestions) {
@@ -65,13 +66,33 @@ export default function Surprise() {
 
       const id = localStorage.getItem("dock-id");
 
-      fetch("https://dock-the-flag-backend.onrender.com/api/submit-score", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id, score: finalScore }),
-      });
+      try {
+        // Update the score
+        await fetch(
+          "https://dock-the-quiz-backend-production.up.railway.app/api/submit-score",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, score: finalScore }),
+          }
+        );
+
+        // Update the finish time
+        await fetch(
+          "https://dock-the-quiz-backend-production.up.railway.app/api/update-finish-time",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+          }
+        );
+      } catch (error) {
+        console.error("Failed to update score or finish time:", error);
+      }
+
+      // Save the current question and score to localStorage before navigating back
+      localStorage.setItem("currentQuestion", resumeFrom);
+      localStorage.setItem("score", finalScore);
 
       navigate("/quiz", {
         state: { resumeFrom: resumeFrom, score: finalScore },
@@ -81,7 +102,16 @@ export default function Surprise() {
 
   const current = surpriseQuestions[currentQuestion];
 
-  if (!current) return <div className="text-green-400">Loading...</div>;
+  // Ensure surpriseQuestions are loaded and currentQuestion is within bounds
+  if (!surpriseQuestions || surpriseQuestions.length === 0) {
+    return <div className="text-green-400">Loading surprise questions...</div>;
+  }
+
+  if (currentQuestion >= surpriseQuestions.length) {
+    return (
+      <div className="text-red-400">No more surprise questions available.</div>
+    );
+  }
 
   return (
     <>
@@ -124,11 +154,11 @@ export default function Surprise() {
             {current.question}
           </motion.h1>
 
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{
-              opacity: fadeOut ? 0 : 1, // Gradually fade out as time decreases
-              scale: fadeOut ? 0.9 : 1, // Slightly shrink the question
+              opacity: fadeOut ? 0 : 1,
+              scale: fadeOut ? 0.9 : 1,
             }}
             transition={{ duration: 1 }}
             className="text-2xl font-bold mb-6 text-center"
@@ -148,7 +178,7 @@ export default function Surprise() {
                 </button>
               ))}
             </div>
-          </motion.h1>
+          </motion.div>
         </GlassCard>
       </div>
     </>

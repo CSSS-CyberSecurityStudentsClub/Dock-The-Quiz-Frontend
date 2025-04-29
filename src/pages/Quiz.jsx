@@ -23,7 +23,9 @@ export default function Quiz() {
 
   const totalQuestions = questions.length;
   const questionsPerRound = 5;
-  const [surpriseRoundIndex] = useState(Math.floor(Math.random() * 8)); // Random stage surprise
+  const [surpriseRoundIndex] = useState(
+    Math.floor(Math.random() * (totalQuestions - questionsPerRound))
+  ); // Improve random switching to surprise logic
 
   useEffect(() => {
     if (timeLeft === 0) handleNext(); // Automatically move to the next question if time runs out
@@ -53,35 +55,83 @@ export default function Quiz() {
 
       // ✨ IMMEDIATELY UPDATE DB
       try {
+        // Update the score
         await fetch(
           "https://dock-the-quiz-backend-production.up.railway.app/api/submit-score",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id, score: updatedScore }), // Use the updated score
+            body: JSON.stringify({ id, score: updatedScore }),
+          }
+        );
+
+        // Update the finish time
+        await fetch(
+          "https://dock-the-quiz-backend-production.up.railway.app/api/update-finish-time",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
           }
         );
       } catch (error) {
-        console.error("Failed to update score:", error);
+        console.error("Failed to update score or finish time:", error);
       }
     }
 
     await nextStep(score + (opt === correct ? 1 : 0)); // Pass the correct updated score
   };
 
+  // Ensure questions are loaded before rendering
+  if (!questions || questions.length === 0) {
+    return <div className="text-green-400">Loading questions...</div>;
+  }
+
+  // Update logic to handle missing or invalid localStorage values
+  useEffect(() => {
+    const savedQuestion = localStorage.getItem("currentQuestion");
+    const savedScore = localStorage.getItem("score");
+
+    if (savedQuestion && !isNaN(savedQuestion)) {
+      setCurrentQuestion(parseInt(savedQuestion, 10));
+    } else {
+      localStorage.setItem("currentQuestion", "0"); // Default to question 0
+    }
+
+    if (savedScore && !isNaN(savedScore)) {
+      setScore(parseInt(savedScore, 10));
+    } else {
+      localStorage.setItem("score", "0"); // Default to score 0
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("currentQuestion", currentQuestion);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    localStorage.setItem("score", score);
+  }, [score]);
+
+  // Save the current question and score to localStorage when navigating to the surprise round
   const nextStep = async (updatedScore) => {
     const nextIndex = currentQuestion + 1;
     const id = localStorage.getItem("dock-id");
 
-    const surpriseTriggerIndex = (surpriseRoundIndex + 1) * questionsPerRound;
+    const surpriseTriggerIndex = surpriseRoundIndex;
 
-    // Navigate to the surprise round if applicable
+    // Prevent navigating to surprise if hasVisitedSurprise is true
+    const hasVisitedSurprise = localStorage.getItem("hasVisitedSurprise") === "true";
+
     if (
       nextIndex === surpriseTriggerIndex &&
-      !hasSurpriseHappened &&
+      !hasVisitedSurprise &&
       nextIndex < totalQuestions
     ) {
       setHasSurpriseHappened(true);
+      localStorage.setItem("hasVisitedSurprise", "true");
+      localStorage.setItem("currentQuestion", nextIndex);
+      localStorage.setItem("score", updatedScore);
       navigate("/surprise", {
         state: { resumeFrom: nextIndex, score: updatedScore },
       });
@@ -106,6 +156,23 @@ export default function Quiz() {
           body: JSON.stringify({ id, score: updatedScore }),
         }
       );
+
+      // Update finish time
+      try {
+        await fetch(
+          "https://dock-the-quiz-backend-production.up.railway.app/api/update-finish-time",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          }
+        );
+      } catch (error) {
+        console.error("Failed to update finish time:", error);
+      }
+
       navigate("/leaderboard", { state: { score: updatedScore } });
     }
   };
@@ -141,19 +208,6 @@ export default function Quiz() {
 
     return () => {
       document.removeEventListener("copy", handleCopy);
-    };
-  }, []);
-  // 6. Detect Long Press on Mobile
-  useEffect(() => {
-    const handleTouchStart = (e) => {
-      e.preventDefault();
-      setCheatCount((prev) => prev + 1);
-      alert("Long press detected! Cheating attempt!");
-    };
-    document.addEventListener("contextmenu", handleTouchStart); // Long press triggers contextmenu on mobile
-
-    return () => {
-      document.removeEventListener("contextmenu", handleTouchStart);
     };
   }, []);
 
@@ -227,6 +281,13 @@ export default function Quiz() {
     }
   }, [cheatCount]);
 
+  // Add question number display and store question number in localStorage
+  const currentQuestionNumber = currentQuestion + 1;
+
+  useEffect(() => {
+    localStorage.setItem("currentQuestion", currentQuestion);
+  }, [currentQuestion]);
+
   return (
     <>
       <LiveBackground mode="matrix" />
@@ -266,7 +327,7 @@ export default function Quiz() {
             transition={{ duration: 0.4 }}
             className="text-2xl font-bold mb-6 text-center"
           >
-            {current.question}
+            Question {currentQuestionNumber}: {current.question}
           </motion.h1>
 
           <div className="flex flex-col gap-4">

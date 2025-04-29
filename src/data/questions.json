@@ -1,33 +1,300 @@
 [
-    {
-      "type": "Scenario-Based Question",
-      "question": "You detect unusual SSH login attempts from multiple IPs. What's your first action?",
-      "options": ["Restart SSH service", "Check auth logs and firewall", "Ignore it", "Block all traffic"],
-      "answer": "Check auth logs and firewall"
-    },
-    {
-      "type": "Puzzle-Based Question",
-      "question": "Decode: What is 'ifconfig' used for?",
-      "options": ["Manage firewall", "Configure network interfaces", "List users", "Monitor CPU"],
-      "answer": "Configure network interfaces"
-    },
-    {
-      "type": "Rapid-Fire Knowledge",
-      "question": "Default port for HTTPS?",
-      "options": ["22", "443", "80", "53"],
-      "answer": "443"
-    },
-    {
-      "type": "Spot the Mistake",
-      "question": "Identify the wrong command to list files.",
-      "options": ["ls", "dir", "show", "ls -a"],
-      "answer": "show"
-    },
-    {
-      "type": "Mystery Flags",
-      "question": "Which Linux directory typically contains user data?",
-      "options": ["/etc", "/home", "/var", "/root"],
-      "answer": "/home"
-    }
-  ]
-  
+  {
+    "id": 1,
+    "type": "Scenario-Based",
+    "question": "Your Linux server is under a brute-force SSH attack. What is the first action you should take to mitigate the threat?",
+    "options": [
+      "Block the attacking IP address using a firewall rule",
+      "Change the SSH port to a non-standard port",
+      "Restart the server to stop the attack",
+      "Ignore the attack and monitor logs"
+    ],
+    "answer": "Block the attacking IP address using a firewall rule"
+  },
+  {
+    "id": 2,
+    "type": "Scenario-Based",
+    "question": "A suspicious process is consuming high CPU on your system. What tool would you use first?",
+    "options": ["htop", "ls", "ping", "cat"],
+    "answer": "htop"
+  },
+  {
+    "id": 3,
+    "type": "Scenario-Based",
+    "question": "You find a user with root privileges they shouldn't have. What’s your immediate action?",
+    "options": ["Remove sudo rights", "Log out", "Change hostname", "Update kernel"],
+    "answer": "Remove sudo rights"
+  },
+  {
+    "id": 4,
+    "type": "Scenario-Based",
+    "question": "You suspect a backdoor was added via crontab. Where do you look?",
+    "options": ["/etc/crontab", "/root/.bashrc", "/dev/null", "/var/log/syslog"],
+    "answer": "/etc/crontab"
+  },
+  {
+    "id": 5,
+    "type": "Scenario-Based",
+    "question": "Your firewall was disabled unexpectedly. First step?",
+    "options": ["Check system logs", "Reboot", "Install Nmap", "Change user password"],
+    "answer": "Check system logs"
+  },
+
+  {
+    "id": 6,
+    "type": "Puzzle-Based",
+    "question": "Decode this base64 string: ZmxhZ3tMaW51eF9tYXN0ZXJ9",
+    "options": ["flag{Linux_master}", "flag{decode_base64}", "flag{CTF_champ}", "flag{root_access}"],
+    "answer": "flag{Linux_master}"
+  },
+  {
+    "id": 7,
+    "type": "Puzzle-Based",
+    "question": "A file has permissions -r-sr-xr--. What’s suspicious?",
+    "options": ["SetUID is on", "Group has write", "No owner", "World writable"],
+    "answer": "SetUID is on"
+  },
+  {
+    "id": 8,
+    "type": "Puzzle-Based",
+    "question": "Find the odd one out: ps, ls, top, grep",
+    "options": ["ps", "ls", "top", "grep"],
+    "answer": "ls"
+  },
+  {
+    "id": 9,
+    "type": "Puzzle-Based",
+    "question": "Which command gives the number of CPUs?",
+    "options": ["nproc", "lscpu", "top", "whoami"],
+    "answer": "nproc"
+  },
+  {
+    "id": 10,
+    "type": "Puzzle-Based",
+    "question": "Which hashing algorithm is the strongest?",
+    "options": ["MD5", "SHA-1", "SHA-256", "Base64"],
+    "answer": "SHA-256"
+  },
+
+
+  {
+    "id": 11,
+    "type": "Rapid-Fire Knowledge",
+    "question": "Linux command to show current directory?",
+    "options": ["pwd", "dir", "path", "cd"],
+    "answer": "pwd"
+  },
+  {
+    "id": 12,
+    "type": "Rapid-Fire Knowledge",
+    "question": "Which port is used by HTTPS?",
+    "options": ["443", "80", "22", "53"],
+    "answer": "443"
+  },
+  {
+    "id": 13,
+    "type": "Rapid-Fire Knowledge",
+    "question": "Command to list files?",
+    "options": ["ls", "ps", "cat", "ping"],
+    "answer": "ls"
+  },
+  {
+    "id": 14,
+    "type": "Rapid-Fire Knowledge",
+    "question": "What is UID of root?",
+    "options": ["0", "1", "100", "1000"],
+    "answer": "0"
+  },
+  {
+    "id": 15,
+    "type": "Rapid-Fire Knowledge",
+    "question": "Linux distro known for hacking?",
+    "options": ["Kali", "Ubuntu", "Mint", "Fedora"],
+    "answer": "Kali"
+  },
+
+
+  {
+    "id": 16,
+    "type": "Spot the Mistake",
+    "question": "Which command is incorrect for user listing?",
+    "options": ["cut -d: -f1 /etc/passwd", "getent passwd", "ls /home", "cat /etc/shadow"],
+    "answer": "cat /etc/shadow"
+  },
+  {
+    "id": 17,
+    "type": "Spot the Mistake",
+    "question": "What’s wrong with: chmod 999 file.txt",
+    "options": ["Permission code invalid", "Command not found", "Wrong file", "Nothing wrong"],
+    "answer": "Permission code invalid"
+  },
+  {
+    "id": 18,
+    "type": "Spot the Mistake",
+    "question": "Which is NOT a valid Linux directory?",
+    "options": ["/etc", "/boot", "/fire", "/home"],
+    "answer": "/fire"
+  },
+  {
+    "id": 19,
+    "type": "Spot the Mistake",
+    "question": "What’s wrong with: ssh root@1.1.1.1 -p root",
+    "options": ["Wrong port", "Syntax OK", "User missing", "No IP"],
+    "answer": "Wrong port"
+  },
+  {
+    "id": 20,
+    "type": "Spot the Mistake",
+    "question": "Which isn’t a file type shown by ls -l?",
+    "options": ["-", "d", "l", "x"],
+    "answer": "x"
+  },
+
+
+  {
+    "id": 21,
+    "type": "Mystery Flags",
+    "question": "You find: echo ‘flag{invisible_hack}’ > /dev/null. What's happening?",
+    "options": ["Flag hidden", "File created", "User logged out", "Password changed"],
+    "answer": "Flag hidden"
+  },
+  {
+    "id": 22,
+    "type": "Mystery Flags",
+    "question": "Hidden string in hex: 66 6c 61 67 7b 68 65 78 5f 72 75 6c 65 7d",
+    "options": ["flag{hex_rule}", "flag{CTF}", "flag{encoded}", "flag{admin}"],
+    "answer": "flag{hex_rule}"
+  },
+  {
+    "id": 23,
+    "type": "Mystery Flags",
+    "question": "Where would you hide a flag in bash?",
+    "options": [".bashrc", ".flag", ".ssh", "crontab"],
+    "answer": ".bashrc"
+  },
+  {
+    "id": 24,
+    "type": "Mystery Flags",
+    "question": "Command to find flags recursively?",
+    "options": ["grep -r flag .", "ls -a", "echo flag", "ps aux"],
+    "answer": "grep -r flag ."
+  },
+  {
+    "id": 25,
+    "type": "Mystery Flags",
+    "question": "Where to hide flags in web apps?",
+    "options": ["robots.txt", "README.md", "favicon.ico", "app.js"],
+    "answer": "robots.txt"
+  },
+
+  {
+    "id": 26,
+    "type": "Audio/Visual Identification",
+    "question": "You see a waveform spike in spectrogram, what could it be?",
+    "options": ["Hidden audio flag", "Bug", "Normal noise", "Firewall alert"],
+    "answer": "Hidden audio flag"
+  },
+  {
+    "id": 27,
+    "type": "Audio/Visual Identification",
+    "question": "Distorted image reveals: fl4g. This means?",
+    "options": ["Encoded flag", "Virus", "Password", "No value"],
+    "answer": "Encoded flag"
+  },
+  {
+    "id": 28,
+    "type": "Audio/Visual Identification",
+    "question": "Sound alert while scanning system might be from?",
+    "options": ["Auditory backdoor", "SSH", "Firewall", "Bash"],
+    "answer": "Auditory backdoor"
+  },
+  {
+    "id": 29,
+    "type": "Audio/Visual Identification",
+    "question": "Which tool helps inspect image flags?",
+    "options": ["Steghide", "htop", "ncdu", "awk"],
+    "answer": "Steghide"
+  },
+  {
+    "id": 30,
+    "type": "Audio/Visual Identification",
+    "question": "Tools for audio flag extraction?",
+    "options": ["Audacity", "grep", "ffmpeg", "cURL"],
+    "answer": "Audacity"
+  },
+
+ 
+  {
+    "id": 31,
+    "type": "Flash Challenges",
+    "question": "Quick: What’s the command to check open ports?",
+    "options": ["netstat", "ls", "grep", "nano"],
+    "answer": "netstat"
+  },
+  {
+    "id": 32,
+    "type": "Flash Challenges",
+    "question": "Command to elevate to root?",
+    "options": ["sudo", "su", "passwd", "root"],
+    "answer": "sudo"
+  },
+  {
+    "id": 33,
+    "type": "Flash Challenges",
+    "question": "Default web server port?",
+    "options": ["80", "21", "53", "443"],
+    "answer": "80"
+  },
+  {
+    "id": 34,
+    "type": "Flash Challenges",
+    "question": "Command to update Linux packages?",
+    "options": ["apt update", "cp", "chmod", "ping"],
+    "answer": "apt update"
+  },
+  {
+    "id": 35,
+    "type": "Flash Challenges",
+    "question": "Tool to crack passwords?",
+    "options": ["John", "grep", "scp", "awk"],
+    "answer": "John"
+  },
+
+  {
+    "id": 36,
+    "type": "Cryptic Questions",
+    "question": "Decode ROT13: synt{fcnpr_yvxr_guvf}",
+    "options": ["flag{space_like_this}", "flag{code_hidden}", "flag{base64}", "flag{binary123}"],
+    "answer": "flag{space_like_this}"
+  },
+  {
+    "id": 37,
+    "type": "Cryptic Questions",
+    "question": "Obfuscated code: `eval('YXdhZApmbGFn')`. Meaning?",
+    "options": ["Awad flag", "flag", "Password", "User"],
+    "answer": "flag"
+  },
+  {
+    "id": 38,
+    "type": "Cryptic Questions",
+    "question": "What is XOR used for in CTFs?",
+    "options": ["Encryption", "Port scan", "Hashing", "Logging"],
+    "answer": "Encryption"
+  },
+  {
+    "id": 39,
+    "type": "Cryptic Questions",
+    "question": "Find flag: strings malware.bin | grep flag",
+    "options": ["Search binary", "Change password", "Root login", "Restart service"],
+    "answer": "Search binary"
+  },
+  {
+    "id": 40,
+    "type": "Cryptic Questions",
+    "question": "Base64 of flag{linux}?",
+    "options": ["ZmxhZ3tsaW51eH0=", "Z2V0ZmxhZw==", "bGludXg=", "ZmcuZmxhZw=="],
+    "answer": "ZmxhZ3tsaW51eH0="
+  }
+]
+
+

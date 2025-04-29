@@ -1,53 +1,52 @@
 [
     {
-      "question": "Which command shows all open network connections?",
-      "options": ["netstat", "ping", "traceroute", "dig"],
-      "answer": "netstat"
+      "question": "What is the command to check the Linux kernel version?",
+      "options": ["uname -r", "lsb_release", "kernel -v", "version"],
+      "answer": "uname -r"
     },
     {
-      "question": "In CTFs, what does 'flag' usually mean?",
-      "options": ["A virus", "A secret string", "An attack", "A defense"],
-      "answer": "A secret string"
+      "question": "Which command is used to display the first few lines of a file?",
+      "options": ["head", "tail", "cat", "less"],
+      "answer": "head"
     },
     {
-      "question": "Port number for SSH service?",
-      "options": ["21", "22", "23", "25"],
-      "answer": "22"
+      "question": "What does the 'df' command display?",
+      "options": ["Disk space usage", "File contents", "Directory structure", "CPU usage"],
+      "answer": "Disk space usage"
     },
     {
-      "question": "Which tool is commonly used for web directory brute-forcing?",
-      "options": ["nmap", "dirb", "john", "wireshark"],
-      "answer": "dirb"
+      "question": "Which command is used to search for a specific pattern in files?",
+      "options": ["grep", "find", "search", "locate"],
+      "answer": "grep"
     },
     {
-      "question": "Command to change file permissions in Linux?",
-      "options": ["chmod", "chperm", "chfile", "chown"],
-      "answer": "chmod"
+      "question": "What is the command to count the number of lines in a file?",
+      "options": ["wc -l", "count", "lines", "nl"],
+      "answer": "wc -l"
     },
     {
-      "question": "Which encryption standard is stronger?",
-      "options": ["MD5", "SHA-1", "SHA-256", "Base64"],
-      "answer": "SHA-256"
+      "question": "Which command is used to display running processes?",
+      "options": ["ps", "top", "jobs", "proc"],
+      "answer": "ps"
     },
     {
-      "question": "Capture the Flag (CTF) usually tests?",
-      "options": ["Gaming skills", "Cybersecurity skills", "Marketing skills", "Drawing skills"],
-      "answer": "Cybersecurity skills"
+      "question": "What does the 'chmod' command modify?",
+      "options": ["File permissions", "File ownership", "File contents", "File name"],
+      "answer": "File permissions"
     },
     {
-      "question": "Find hidden data in image files is called?",
-      "options": ["Cryptography", "Steganography", "Phishing", "Ransomware"],
-      "answer": "Steganography"
+      "question": "Which command is used to display the manual of a command?",
+      "options": ["man", "help", "info", "manual"],
+      "answer": "man"
     },
     {
-      "question": "Common Linux tool for network scanning?",
-      "options": ["Nmap", "Gimp", "Git", "Mysql"],
-      "answer": "Nmap"
+      "question": "What is the command to display the current system date and time?",
+      "options": ["date", "time", "clock", "now"],
+      "answer": "date"
     },
     {
-      "question": "What does the Linux 'root' user have?",
-      "options": ["Limited access", "No access", "Full control", "Read-only access"],
-      "answer": "Full control"
+      "question": "Which command is used to terminate a process by its ID?",
+      "options": ["kill", "stop", "end", "terminate"],
+      "answer": "kill"
     }
-  ]
-  
+]
