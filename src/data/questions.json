@@ -243,5 +243,40 @@
     "question": "Which command shows running processes?",
     "options": ["ps aux", "netstat", "kill", "uptime"],
     "answer": "ps aux"
+  },
+  {
+    "id": 36,
+    "type": "Scenario-Based",
+    "question": "You find an unexpected user added to the sudoers file. What’s your best immediate course of action?",
+    "options": ["Remove the user and investigate logs", "Restart the system", "Ignore it", "Update the OS"],
+    "answer": "Remove the user and investigate logs"
+  },
+  {
+    "id": 37,
+    "type": "Puzzle-Based",
+    "question": "You see a file with permission string: `-rw-r--r--`. Who can write to it?",
+    "options": ["Owner only", "Everyone", "Group only", "Owner and group"],
+    "answer": "Owner only"
+  },
+  {
+    "id": 38,
+    "type": "Spot the Mistake",
+    "question": "Which command is invalid?",
+    "options": ["mkdir folder", "cd ..", "ls | grep txt", "echo >"],
+    "answer": "echo >"
+  },
+  {
+    "id": 39,
+    "type": "Visual Logic",
+    "question": "Which path structure is most likely to store log files?",
+    "options": ["/var/log/", "/home/user/tmp", "/bin/log", "/root/logs"],
+    "answer": "/var/log/"
+  },
+  {
+    "id": 40,
+    "type": "Flash Challenge",
+    "question": "Fast! What command checks RAM usage instantly?",
+    "options": ["free -h", "du -sh", "df -T", "mem --info"],
+    "answer": "free -h"
   }
 ]
