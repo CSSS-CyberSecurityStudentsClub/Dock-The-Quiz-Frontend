@@ -3,12 +3,7 @@
     "id": 1,
     "type": "Scenario-Based",
     "question": "Your Linux server is under a brute-force SSH attack. What is the first action you should take to mitigate the threat?",
-    "options": [
-      "Block the attacking IP address using a firewall rule",
-      "Change the SSH port to a non-standard port",
-      "Restart the server to stop the attack",
-      "Ignore the attack and monitor logs"
-    ],
+    "options": ["Block the attacking IP address using a firewall rule", "Change the SSH port to a non-standard port", "Restart the server to stop the attack", "Ignore the attack and monitor logs"],
     "answer": "Block the attacking IP address using a firewall rule"
   },
   {
@@ -42,9 +37,9 @@
   {
     "id": 6,
     "type": "Puzzle-Based",
-    "question": "Decode this base64 string: ZmxhZ3tMaW51eF9tYXN0ZXJ9",
-    "options": ["flag{Linux_master}", "flag{decode_base64}", "flag{CTF_champ}", "flag{root_access}"],
-    "answer": "flag{Linux_master}"
+    "question": "Which command would display all users on the system?",
+    "options": ["cut -d: -f1 /etc/passwd", "whoami", "ls /home", "echo $USER"],
+    "answer": "cut -d: -f1 /etc/passwd"
   },
   {
     "id": 7,
@@ -70,7 +65,7 @@
   {
     "id": 10,
     "type": "Puzzle-Based",
-    "question": "Which hashing algorithm is the strongest?",
+    "question": "Which hashing algorithm is the strongest among these?",
     "options": ["MD5", "SHA-1", "SHA-256", "Base64"],
     "answer": "SHA-256"
   },
@@ -147,141 +142,106 @@
   {
     "id": 21,
     "type": "Mystery Flags",
-    "question": "You find: echo ‘flag{invisible_hack}’ > /dev/null. What's happening?",
-    "options": ["Flag hidden", "File created", "User logged out", "Password changed"],
-    "answer": "Flag hidden"
+    "question": "Which file is most likely to store a flag during a Linux CTF challenge?",
+    "options": ["/home/user/.bashrc", "/etc/passwd", "/dev/random", "/bin/bash"],
+    "answer": "/home/user/.bashrc"
   },
   {
     "id": 22,
     "type": "Mystery Flags",
-    "question": "Hidden string in hex: 66 6c 61 67 7b 68 65 78 5f 72 75 6c 65 7d",
-    "options": ["flag{hex_rule}", "flag{CTF}", "flag{encoded}", "flag{admin}"],
-    "answer": "flag{hex_rule}"
+    "question": "A CTF flag is found in a file called '.flag_hidden'. Which command lists it?",
+    "options": ["ls -a", "cat *", "rm -rf /", "whoami"],
+    "answer": "ls -a"
   },
   {
     "id": 23,
     "type": "Mystery Flags",
-    "question": "Where would you hide a flag in bash?",
-    "options": [".bashrc", ".flag", ".ssh", "crontab"],
-    "answer": ".bashrc"
+    "question": "Flags are often hidden in what type of file in Linux challenges?",
+    "options": ["Hidden dotfiles", "Binaries", "ISO files", "Swap memory"],
+    "answer": "Hidden dotfiles"
   },
   {
     "id": 24,
     "type": "Mystery Flags",
-    "question": "Command to find flags recursively?",
-    "options": ["grep -r flag .", "ls -a", "echo flag", "ps aux"],
+    "question": "What command can search for the word 'flag' in all files and directories recursively?",
+    "options": ["grep -r flag .", "find . flag", "ls | flag", "search flag ."],
     "answer": "grep -r flag ."
   },
   {
     "id": 25,
     "type": "Mystery Flags",
-    "question": "Where to hide flags in web apps?",
-    "options": ["robots.txt", "README.md", "favicon.ico", "app.js"],
-    "answer": "robots.txt"
+    "question": "Which of these file types is least likely to hide a flag?",
+    "options": ["robots.txt", "index.html", "README.md", "core dump"],
+    "answer": "core dump"
   },
   {
     "id": 26,
-    "type": "Audio/Visual Identification",
-    "question": "You see a waveform spike in spectrogram, what could it be?",
-    "options": ["Hidden audio flag", "Bug", "Normal noise", "Firewall alert"],
-    "answer": "Hidden audio flag"
+    "type": "Visual Logic",
+    "question": "Which terminal prompt is valid?",
+    "options": ["user@linux:~$", "root@windows:/#", "linux@linux:/$", "admin@osx:>"],
+    "answer": "user@linux:~$"
   },
   {
     "id": 27,
-    "type": "Audio/Visual Identification",
-    "question": "Distorted image reveals: fl4g. This means?",
-    "options": ["Encoded flag", "Virus", "Password", "No value"],
-    "answer": "Encoded flag"
+    "type": "Visual Logic",
+    "question": "Which of the following looks like a cron expression?",
+    "options": ["* * * * *", "0-60 every day", "10am run daily", "cron now"],
+    "answer": "* * * * *"
   },
   {
     "id": 28,
-    "type": "Audio/Visual Identification",
-    "question": "Sound alert while scanning system might be from?",
-    "options": ["Auditory backdoor", "SSH", "Firewall", "Bash"],
-    "answer": "Auditory backdoor"
+    "type": "Visual Logic",
+    "question": "Which one represents a directory?",
+    "options": ["drwxr-xr-x", "-rwxr--r--", "crw-rw-rw-", "lrwxrwxrwx"],
+    "answer": "drwxr-xr-x"
   },
   {
     "id": 29,
-    "type": "Audio/Visual Identification",
-    "question": "Which tool helps inspect image flags?",
-    "options": ["Steghide", "htop", "ncdu", "awk"],
-    "answer": "Steghide"
+    "type": "Visual Logic",
+    "question": "Which one is a symbolic link?",
+    "options": ["lrwxrwxrwx", "-rwxr--r--", "drwx------", "crw--w--w-"],
+    "answer": "lrwxrwxrwx"
   },
   {
     "id": 30,
-    "type": "Audio/Visual Identification",
-    "question": "Tools for audio flag extraction?",
-    "options": ["Audacity", "grep", "ffmpeg", "cURL"],
-    "answer": "Audacity"
+    "type": "Visual Logic",
+    "question": "Which output line from 'ls -l' most likely refers to a hidden script?",
+    "options": [".run.sh", "run.sh", "flag.sh", "flag.txt"],
+    "answer": ".run.sh"
   },
   {
     "id": 31,
-    "type": "Flash Challenges",
-    "question": "Quick: What’s the command to check open ports?",
-    "options": ["netstat", "ls", "grep", "nano"],
-    "answer": "netstat"
+    "type": "Flash Challenge",
+    "question": "Quick! What command checks current disk usage?",
+    "options": ["df -h", "du -a", "lsblk", "free -m"],
+    "answer": "df -h"
   },
   {
     "id": 32,
-    "type": "Flash Challenges",
-    "question": "Command to elevate to root?",
-    "options": ["sudo", "su", "passwd", "root"],
-    "answer": "sudo"
+    "type": "Flash Challenge",
+    "question": "Which command finds files modified today?",
+    "options": ["find . -mtime 0", "ls -a", "du -sh", "free -t"],
+    "answer": "find . -mtime 0"
   },
   {
     "id": 33,
-    "type": "Flash Challenges",
-    "question": "Default web server port?",
-    "options": ["80", "21", "53", "443"],
-    "answer": "80"
+    "type": "Flash Challenge",
+    "question": "What does 'chmod +x file.sh' do?",
+    "options": ["Makes it executable", "Deletes the file", "Changes ownership", "Prints the file"],
+    "answer": "Makes it executable"
   },
   {
     "id": 34,
-    "type": "Flash Challenges",
-    "question": "Command to update Linux packages?",
-    "options": ["apt update", "cp", "chmod", "ping"],
-    "answer": "apt update"
+    "type": "Flash Challenge",
+    "question": "Which command shows system uptime?",
+    "options": ["uptime", "top", "ps", "vmstat"],
+    "answer": "uptime"
   },
   {
     "id": 35,
-    "type": "Flash Challenges",
-    "question": "Tool to crack passwords?",
-    "options": ["John", "grep", "scp", "awk"],
-    "answer": "John"
-  },
-  {
-    "id": 36,
-    "type": "Flash Challenges",
-    "question": "Command to change file permissions?",
-    "options": ["chmod", "chown", "cp", "ls"],
-    "answer": "chmod"
-  },
-  {
-    "id": 37,
-    "type": "Flash Challenges",
-    "question": "Tool to scan networks?",
-    "options": ["nmap", "nano", "top", "mv"],
-    "answer": "nmap"
-  },
-  {
-    "id": 38,
-    "type": "Flash Challenges",
-    "question": "Command to find string in file?",
-    "options": ["grep", "cd", "ls", "sudo"],
-    "answer": "grep"
-  },
-  {
-    "id": 39,
-    "type": "Flash Challenges",
-    "question": "Command to switch user?",
-    "options": ["su", "mv", "top", "cat"],
-    "answer": "su"
-  },
-  {
-    "id": 40,
-    "type": "Flash Challenges",
-    "question": "Linux command to compress files?",
-    "options": ["tar", "ssh", "cat", "exit"],
-    "answer": "tar"
+    "type": "Flash Challenge",
+    "question": "Which command shows running processes?",
+    "options": ["ps aux", "netstat", "kill", "uptime"],
+    "answer": "ps aux"
   }
 ]
