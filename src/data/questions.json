@@ -39,7 +39,6 @@
     "options": ["Check system logs", "Reboot", "Install Nmap", "Change user password"],
     "answer": "Check system logs"
   },
-
   {
     "id": 6,
     "type": "Puzzle-Based",
@@ -75,8 +74,6 @@
     "options": ["MD5", "SHA-1", "SHA-256", "Base64"],
     "answer": "SHA-256"
   },
-
-
   {
     "id": 11,
     "type": "Rapid-Fire Knowledge",
@@ -112,8 +109,6 @@
     "options": ["Kali", "Ubuntu", "Mint", "Fedora"],
     "answer": "Kali"
   },
-
-
   {
     "id": 16,
     "type": "Spot the Mistake",
@@ -149,8 +144,6 @@
     "options": ["-", "d", "l", "x"],
     "answer": "x"
   },
-
-
   {
     "id": 21,
     "type": "Mystery Flags",
@@ -186,7 +179,6 @@
     "options": ["robots.txt", "README.md", "favicon.ico", "app.js"],
     "answer": "robots.txt"
   },
-
   {
     "id": 26,
     "type": "Audio/Visual Identification",
@@ -222,8 +214,6 @@
     "options": ["Audacity", "grep", "ffmpeg", "cURL"],
     "answer": "Audacity"
   },
-
- 
   {
     "id": 31,
     "type": "Flash Challenges",
@@ -259,42 +249,39 @@
     "options": ["John", "grep", "scp", "awk"],
     "answer": "John"
   },
-
   {
     "id": 36,
-    "type": "Cryptic Questions",
-    "question": "Decode ROT13: synt{fcnpr_yvxr_guvf}",
-    "options": ["flag{space_like_this}", "flag{code_hidden}", "flag{base64}", "flag{binary123}"],
-    "answer": "flag{space_like_this}"
+    "type": "Flash Challenges",
+    "question": "Command to change file permissions?",
+    "options": ["chmod", "chown", "cp", "ls"],
+    "answer": "chmod"
   },
   {
     "id": 37,
-    "type": "Cryptic Questions",
-    "question": "Obfuscated code: `eval('YXdhZApmbGFn')`. Meaning?",
-    "options": ["Awad flag", "flag", "Password", "User"],
-    "answer": "flag"
+    "type": "Flash Challenges",
+    "question": "Tool to scan networks?",
+    "options": ["nmap", "nano", "top", "mv"],
+    "answer": "nmap"
   },
   {
     "id": 38,
-    "type": "Cryptic Questions",
-    "question": "What is XOR used for in CTFs?",
-    "options": ["Encryption", "Port scan", "Hashing", "Logging"],
-    "answer": "Encryption"
+    "type": "Flash Challenges",
+    "question": "Command to find string in file?",
+    "options": ["grep", "cd", "ls", "sudo"],
+    "answer": "grep"
   },
   {
     "id": 39,
-    "type": "Cryptic Questions",
-    "question": "Find flag: strings malware.bin | grep flag",
-    "options": ["Search binary", "Change password", "Root login", "Restart service"],
-    "answer": "Search binary"
+    "type": "Flash Challenges",
+    "question": "Command to switch user?",
+    "options": ["su", "mv", "top", "cat"],
+    "answer": "su"
   },
   {
     "id": 40,
-    "type": "Cryptic Questions",
-    "question": "Base64 of flag{linux}?",
-    "options": ["ZmxhZ3tsaW51eH0=", "Z2V0ZmxhZw==", "bGludXg=", "ZmcuZmxhZw=="],
-    "answer": "ZmxhZ3tsaW51eH0="
+    "type": "Flash Challenges",
+    "question": "Linux command to compress files?",
+    "options": ["tar", "ssh", "cat", "exit"],
+    "answer": "tar"
   }
 ]
-
-
